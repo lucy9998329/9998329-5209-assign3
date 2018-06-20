@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <link href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+
+          <style>
+                /*using bootstrap group button stylesheet to group a serie of buttons together*/
+                .btn-group button {
+                    background-color: white;
+                    border: none;
+        
+                    color: black;
+                    padding: 20px 30px;
+                    cursor: pointer;
+                    width: 450px;
+                    text-align: left;
+                    display: block;
+                }
+        
+                .btn-group button:not(:last-child) {
+                    border-bottom: none;
+                }
+        
+                .btn-group button:hover {
+                    background-color: #e1e1e1;
+                }
+        
+                .success {
+                    background-color: #4CAF50;
+                }
+        
+                .success:hover {
+                    background-color: #46a049;
+                }
+        
+                .danger {
+                    background-color: #f44336;
+                }
+        
+                .danger:hover {
+                    background: #da190b;
+                }
+            </style>
+          
+</head> 
+<body>
+        <nav class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#" style="color: purple">Select Group</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Messages</a></li>
+                            <li><a href="#">Emergency Contact</a></li>
+                            <li><a href="#">Location Sharing</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings</i>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Group Option</a></li>
+                                    <li><a href="#">Map Option</a></li>
+                                    <li><a href="#">Alert Option</a></li>
+                                    <li><a href="#">Account</a></li>
+                                    <li><a href="#">Log out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3 col-md-6 col-lg-4">
+                        <div class="leftside">
+                            <div class="btn-group">
+                                <button>Family</button>
+                                <button>Extended Family</button>
+                                <button>Friends</button>
+                                <button>Add Group</button>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-sm-9 col-md-6 col-lg-8">
+                        <div class="rightside">
+                            <div id="map" style="height: 600px; padding: 0 auto"></div>                    
+                            <div id="button" type="button" class="btn btn-primary" onclick="getLocation()">Find<br>whanau</div>
+                            <div id="button" type="button" class="btn btn-warning" onclick="myFunction()">Message<br>whanau</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+  <script type="text/javascript">
+  
+    var locations = [
+
+        ['Person 1', -37.6878, 176.1642],
+        ['Person 2', -37.6878, 176.1649],
+        ['Person 3', -37.6878, 176.1647],
+        ['Person 4', -37.6878, 176.1653],
+        ['Person 5', -37.6878, 176.1659]
+      
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18, 
+      center: new google.maps.LatLng(-37.6878, 176.1651), //this is Tauranga
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+   <script src="script/script.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
